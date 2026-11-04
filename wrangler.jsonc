@@ -1,0 +1,52 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "blossom-iqbqioza",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2026-11-04",
+  "compatibility_flags": ["global_fetch_strictly_public"],
+  "upload_source_maps": true,
+  "observability": {
+    "enabled": true
+  },
+  "previews": {
+    // Previews intentionally have no production D1/R2/DO bindings.
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "BLOB_COORDINATOR",
+        "class_name": "BlobCoordinator"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["BlobCoordinator"]
+    }
+  ],
+  "assets": {
+    "directory": "./dist/admin",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "not_found_handling": "none"
+  },
+  "vars": {
+    "MAX_UPLOAD_BYTES": "26214400",
+    "ENABLE_MIRROR": "false"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "blossomflare-db",
+      "database_id": "7c47bb71-1e46-4191-8a58-e178333aa308",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BLOBS",
+      "bucket_name": "blossomflare-blobs","preview_bucket_name": "blossomflare-blobs"
+    }
+  ]
+}
